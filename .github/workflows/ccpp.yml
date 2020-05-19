@@ -24,7 +24,7 @@ jobs:
       - name: Compile code
         shell: cmd
         run: |
-          cl.exe TestMain.cpp MyTestCases.cpp
+          cl.exe TestFrameWork\TestMain.cpp TestFrameWork\MyTestCases.cpp
           TestMain.exe
   audit:
     name: npm audit
