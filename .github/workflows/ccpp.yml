@@ -17,11 +17,11 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v1
-      - name: Download Dependency
+      - name: Download Dependencies
         run: npm install
-      - name: Enable Developer Command Prompt
+      - name: SetUp CL Environment 
         uses: ./
-      - name: Compile code
+      - name: Compile & Run Test Cases
         shell: cmd
         run: |
           cl.exe TestFrameWork\TestMain.cpp TestFrameWork\MyTestCases.cpp
