@@ -2,6 +2,7 @@
 #include "TestMain.h"
 #include "MyTestCases.h"
 #include<iostream>
+#include <windows.h> 
 
 using namespace std;
 
@@ -20,7 +21,7 @@ TestCases ModuleATestCases[] = {
 
 TestCases ModuleBTestCases[] = {
 	{"testcaseB1",testcaseB1},
-    {"testcaseB2",testcaseB1},
+    {"testcaseB2",testcaseB2},
 	{"FiniTestCase",FINITESTCASE}
 
 };
@@ -57,6 +58,8 @@ int main()
 
 	int ret = 0;
 	bool suitefailedflag = false;
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
 	std::cout<<endl<<"\t=============="<<endl;
 	std::cout<<"\tTEST FRAMEWORK"<<endl;
 	std::cout<<"\t=============="<<endl;
@@ -65,7 +68,7 @@ int main()
 	for(int iTestSuite = 0;TestSuiteList[iTestSuite].ptrTestCases != NULL;iTestSuite++)
 	{
 
-		std::cout<<"\nRunning Suite"<<TestSuiteList[iTestSuite].name;
+		std::cout<<"\nRunning Suite : "<<TestSuiteList[iTestSuite].name;
 
 		TestCases *ptrTestCaseList = TestSuiteList[iTestSuite].ptrTestCases;
 		g_TotalTestSuitsRan++;
@@ -74,19 +77,21 @@ int main()
 		for(int iTestCase = 0;ptrTestCaseList[iTestCase].ptrTestFunction != NULL;iTestCase++)
 		{
 
-			std::cout<<"\nRunning Case"<<ptrTestCaseList[iTestCase].name;
+			std::cout<<"\nCalling Case: "<<ptrTestCaseList[iTestCase].name;
 
 			EnumResult er = ptrTestCaseList[iTestCase].ptrTestFunction();
 			switch(er)
 			{
 				case PASS:
 					g_TotalPassed++;
+					SetConsoleTextAttribute(hConsole, 2);
 					std::cout<<" : PASS"<<endl;
 					break;
 
 				case FAIL:
 					g_TotalFailed++;
 					suitefailedflag = true;
+					SetConsoleTextAttribute(hConsole, 12);
 					std::cout<<" : FAIL"<<endl;
 					break;
 
@@ -95,6 +100,7 @@ int main()
 					g_TotalSkipped++;
 
 			}
+			SetConsoleTextAttribute(hConsole, 15);
 
 		}//end of test cases
 
@@ -107,8 +113,10 @@ int main()
 
 	}//end of testsuites
 
-
+    SetConsoleTextAttribute(hConsole, 1);
 	PrintTestResults();
+	SetConsoleTextAttribute(hConsole, 15);
+
 
 	//fail Test result of excepted result differs
 	if (g_TotalTestSuitsFailed > 0)
