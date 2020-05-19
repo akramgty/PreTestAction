@@ -1,0 +1,36 @@
+name: Build-CPP-Action
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: '0 3 * * *'
+
+jobs:
+  test:
+    name: buildproject
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v1
+      - name: Download Dependency
+        run: npm install
+      - name: Enable Developer Command Prompt
+        uses: ./
+      - name: Compile code
+        shell: cmd
+        run: |
+          cl.exe TestMain.cpp MyTestCases.cpp
+          TestMain.exe
+  audit:
+    name: npm audit
+    runs-on: windows-latest
+    steps:
+      - name: Check out source code
+        uses: actions/checkout@v1
+      - run: npm install
+      - run: npm audit --audit-level=moderate
