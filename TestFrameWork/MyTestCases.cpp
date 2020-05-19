@@ -23,5 +23,5 @@ EnumResult testcaseB1()
 EnumResult testcaseB2()
 {
 	std::cout<<"\nRunning testcaseB2...";
-	return FAIL;
+	return PASS;
 }

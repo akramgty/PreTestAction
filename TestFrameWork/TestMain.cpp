@@ -68,16 +68,17 @@ int main()
 	for(int iTestSuite = 0;TestSuiteList[iTestSuite].ptrTestCases != NULL;iTestSuite++)
 	{
 
-		std::cout<<"\nRunning Suite : "<<TestSuiteList[iTestSuite].name;
+		std::cout<<"\nStarted Test-Suite : "<<TestSuiteList[iTestSuite].name;
 
 		TestCases *ptrTestCaseList = TestSuiteList[iTestSuite].ptrTestCases;
 		g_TotalTestSuitsRan++;
+		
 		//suitefailedflag  alreday set to false
 
 		for(int iTestCase = 0;ptrTestCaseList[iTestCase].ptrTestFunction != NULL;iTestCase++)
 		{
 
-			std::cout<<"\nCalling Case: "<<ptrTestCaseList[iTestCase].name;
+			std::cout<<"\nCalling Test-Case: "<<ptrTestCaseList[iTestCase].name;
 
 			EnumResult er = ptrTestCaseList[iTestCase].ptrTestFunction();
 			switch(er)
